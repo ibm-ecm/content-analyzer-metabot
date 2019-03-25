@@ -1,0 +1,12 @@
+{
+  "functionalID": "ca_api.fid@t01",
+  "password": "6haWbPP+jYWa1JdVFpfsncBK6F0gd16CiAYOLxid",
+  "apiKey": "123b215d-134a-422e-c652-56c15tt04497",
+  "mainURL": "https://requesturl/ca/rest/content/v1",
+  "responseType": "\"json\"",
+  "jsonOptions": "\"ocr\",\"dc\",\"kvp\",\"sn\"",
+  "fields":[
+    "Invoice_Number",
+	  "Total_Cost"	    
+	]
+}
