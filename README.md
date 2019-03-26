@@ -13,7 +13,7 @@ This Content Analyzer Metabot is supported in IBM Robotic Process Automation wit
 
 ## Basic Components
 + [**ContentAnalyzer_MetaBot**](ContentAnalyzer_MetaBot) - This folder contains the installation ContentAnalyzer.mbot for Automation Anywhere client, and the sample configuration file required when using Content Analyzer MetaBot
-+ [**ContentAnalyzer_C#**](ContentAnalyzer_C#) - This folder is only for developers and MetaBot creators. It contains the C# projects which can build the .dll files required to create the MetaBot.
++ [**MetaBotBuild_C#**](MetaBotBuild_C#) - This folder is only for developers and MetaBot creators who want to see the source code. It contains the C# projects which can build the .dll files required to create the MetaBot.
 
 ## Installation and Configuration Information
 Content Analyzer MetaBot needs to be installed into Automation Anywhere client and adds configuration file before running. Please look at the readme file in [**ContentAnalyzer_MetaBot**](ContentAnalyzer_MetaBot) folder for more detail.
