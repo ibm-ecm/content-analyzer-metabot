@@ -91,21 +91,44 @@ namespace MetaBot
             
             Config configParams = new Config();
             string jsonParams = File.ReadAllText(@configFilePath);
-            configParams = (JsonConvert.DeserializeObject<Config>(jsonParams));
+            try
+            {
+                configParams = (JsonConvert.DeserializeObject<Config>(jsonParams));
+            }
+            catch (JsonReaderException err) {
+                return "jsonParams: " + err.ToString();
+            }
+
 
             //=============Step 1: submit the file for processing and get the analyzerId=========
 
             IRestResponse responseSubmit = submitFile(configParams, imagePath);
             string analyzerId = String.Empty;
+            JObject responseJSON = new JObject();
             if (responseSubmit.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
-                JObject responseJSON = JObject.Parse(responseSubmit.Content);
+                
+                try
+                {
+                    responseJSON = JObject.Parse(responseSubmit.Content);
+                }
+                catch (JsonReaderException err)
+                {
+                    return "submitRes: " + err.ToString();
+                }
                 var analyzer = responseJSON["data"]["analyzerId"];
                 analyzerId = analyzer.ToString();
             }
             else
             {
-                JObject responseJSON = JObject.Parse(responseSubmit.Content);
+                try
+                {
+                    responseJSON = JObject.Parse(responseSubmit.Content);
+                }
+                catch (JsonReaderException err)
+                {
+                    return "submitResBad: " + err.ToString();
+                }
                 JObject errorJSON = new JObject();
                 errorJSON["errors"] = responseJSON["errors"];
                 string error1 = errorJSON.ToString();
@@ -120,9 +143,17 @@ namespace MetaBot
             for (int i = 1; i < 10; i++) {
                 System.Threading.Thread.Sleep(5000);
                 responseStatus = getStatus(configParams, analyzerId);
+                JObject res = new JObject();
                 if (responseStatus.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    JObject res = JObject.Parse(responseStatus.Content);
+                    try
+                    {
+                        res = JObject.Parse(responseStatus.Content);
+                    }
+                    catch (JsonReaderException err)
+                    {
+                        return "statusRes: " + err.ToString();
+                    }
                     var status = res["data"]["statusDetails"][0]["status"];
                     statusStr = status.ToString();
                     if (statusStr == "Completed")
@@ -131,7 +162,15 @@ namespace MetaBot
                     }
                 }
                 else {
-                    JObject res = JObject.Parse(responseStatus.Content);
+                    try
+                    {
+                        res = JObject.Parse(responseStatus.Content);
+                    }
+                    catch (JsonReaderException err)
+                    {
+                        return "statusResBad:" + err.ToString();
+                    }
+                
                     JObject errorJSON = new JObject();
                     errorJSON["errors"] = res["errors"];
                     string error2 = errorJSON.ToString();
@@ -145,12 +184,20 @@ namespace MetaBot
             if (statusStr == "Completed")
             {
                 IRestResponse responseOutput = getJson(configParams, analyzerId);
+                JObject json = new JObject();
                 if (responseOutput.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     JObject resFinal = new JObject();
                     string resStr = String.Empty;
                     string responseStr = responseOutput.Content;
-                    JObject json = JObject.Parse(responseStr);
+                    try
+                    {
+                        json = JObject.Parse(responseStr);
+                    }
+                    catch (JsonReaderException err)
+                    {
+                        return "jsonRes: " + err.ToString();
+                    }
 
                     resFinal = formatJSON(configParams.fields, json);
                     resStr = resFinal.ToString();
@@ -163,7 +210,14 @@ namespace MetaBot
                 else
                 {
                     string responseStr = responseOutput.Content;
-                    JObject json = JObject.Parse(responseStr);
+                    try
+                    {
+                        json = JObject.Parse(responseStr);
+                    }
+                    catch (JsonReaderException err)
+                    {
+                        return "jsonResBad: " + err.ToString();
+                    }
                     JObject errorJSON = new JObject();
                     errorJSON["errors"] = json["errors"];
                     string error3 = errorJSON.ToString();
