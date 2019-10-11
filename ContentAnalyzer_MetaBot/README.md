@@ -15,7 +15,7 @@ At a high level, configuring the Content Analyzer MetaBot requires the following
 Log into the web interface to “train” your Content Analyzer instance to recognize your specific ontology based on the type of documents to be processed. For example, for invoices, first add document class *Invoice* on Content Analyzer Ontology pageset. Second, add classification world which will be used when doing the document classification. In the third step, add key classes and their key alias which will be extracted in the final JSON output, such as Invoice_Number, Total_Cost, etc. It is recommended to discuss these requirements with the RPA specialist and get a good understanding of how the extracted data will be used later on in the RPA process.
 
 2. Test ontology on the web interface.
-After create a new ontology, please go to Documents page on the web interface to upload a file for testing. When the processing is completed, you can check the results by click the file name link. Please verify the document class and key value pairs. If you do not satisfy the results, please correct the key class and click the Learn button. After that resubmit button can trigger a new processing with the revised ontology. When the results are all right, go can start working with BACA MetaBot.
+After create a new ontology, please go to Documents page on the web interface to upload a file for testing. When the processing is completed, you can check the results by click the file name link. Please verify the document class and key value pairs. If you do not satisfy the results, please correct the key class and click the Learn button. After that resubmit button can trigger a new processing with the revised ontology. When the results are all right, go can start working with Content Analyzer MetaBot.
 
 3. Copy the configuration file.
 Please copy the sample configuration file **config.json** to the same system which will install the Content Analyzer MetaBot later.
@@ -49,7 +49,7 @@ Input parameters:
 
 Name | Description | Value
 --- | --- | --
-configFilePath | path for the configuration file |  $configFilePath$ or </br> string like, C:\BACA_config.json 
+configFilePath | path for the configuration file |  $configFilePath$ or </br> string like, C:\config.json 
 imagePath | path for the document to process | $imagePath$ or </br> string like, C:\docs\doc01.pdf 
 
 Output parameter: 
@@ -63,7 +63,7 @@ The values of these parameters could be set either by inserting variables or by 
 1. Add the values of parameters by inserting variables:
 
 First, add three variables to Variable Manager in IBM RPA with the following formats, then insert configFilePath, imagePath into the input parameters, and results into output parameter.
-- configFilePath - this is the path for the configuration file. Variable type should be set as Value, variable value should be a string, for example, C:\BACA_config.json
+- configFilePath - this is the path for the configuration file. Variable type should be set as Value, variable value should be a string, for example, C:\config.json
 - imagePath - this is the path for the electronic or image document you want to process. Variable type should be set as Value, variable value should be a string, for example, C:\docs\doc01.pdf.
 - results - variable type should be set ass Value, and variable value should be NULL
 
